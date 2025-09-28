@@ -18,7 +18,7 @@ class Wallet(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(100), nullable=False)
     description: Mapped[Optional[str]] = mapped_column(
-        Text(500),
+        Text(),
         nullable=True,
     )
     uuid: Mapped[UUID] = mapped_column(
