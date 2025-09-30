@@ -5,7 +5,9 @@ Revises:
 Create Date: 2025-09-30 04:35:50.645219
 
 """
+from datetime import datetime
 from typing import Sequence, Union
+import uuid
 
 from alembic import op
 import sqlalchemy as sa
@@ -33,6 +35,19 @@ def upgrade() -> None:
     op.create_index(op.f('ix_wallets_id'), 'wallets', ['id'], unique=False)
     op.create_index(op.f('ix_wallets_uuid'), 'wallets', ['uuid'], unique=True)
     # ### end Alembic commands ###
+
+    op.execute(
+           sa.text("""
+               INSERT INTO wallets (title, description, uuid, balance, executing_date)
+               VALUES (:title, :description, :uuid, :balance, :executing_date)
+           """).bindparams(
+               title="Основной кошелек",
+               description="Автоматически созданный кошелек",
+               uuid=uuid.uuid4(),
+               balance=1000.00,
+               executing_date=datetime.now()
+           )
+       )
 
 
 def downgrade() -> None:

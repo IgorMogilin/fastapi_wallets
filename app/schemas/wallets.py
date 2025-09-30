@@ -5,6 +5,14 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+from app.utils.constans import (
+    DEFAULT_BALANCE,
+    MAX_LENGTH_TITLE,
+    MAX_LENGTH_DESCRIPTION,
+    MIN_LENGTH_TITLE,
+    MINIMAL_BALANCE,
+)
+
 
 class OperationType(str, Enum):
     """Схема для выбора типа операции."""
@@ -18,18 +26,18 @@ class WalletCreate(BaseModel):
 
     title: str = Field(
         ...,
-        min_length=3,
-        max_length=100,
+        min_length=MIN_LENGTH_TITLE,
+        max_length=MAX_LENGTH_TITLE,
         description='Название кошелька.',
     )
     description: str | None = Field(
         None,
-        max_length=500,
+        max_length=MAX_LENGTH_DESCRIPTION,
         description='Описание кошелька (до 500 символов)',
     )
     balance: Decimal = Field(
-        default=0.00,
-        ge=0,
+        default=DEFAULT_BALANCE,
+        ge=MINIMAL_BALANCE,
         description='Начальный баланс',
     )
 
@@ -69,6 +77,6 @@ class WalletOperation(BaseModel):
     )
     amount: Decimal = Field(
         ...,
-        ge=0,
+        ge=MINIMAL_BALANCE,
         description='Сумма операции'
     )
