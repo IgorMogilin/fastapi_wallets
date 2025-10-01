@@ -3,9 +3,9 @@ services:
     image: postgres:15-alpine
     container_name: fastapi_wallets_db
     environment:
-      POSTGRES_DB: wallets_db
-      POSTGRES_USER: wallets_user
-      POSTGRES_PASSWORD: wallets_password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -20,7 +20,8 @@ services:
     build: .
     container_name: fastapi_wallets_app
     environment:
-      DATABASE_URL: postgresql+asyncpg://wallets_user:wallets_password@postgres:5432/wallets_db
+      DATABASE_URL: ${DATABASE_URL}
+      TESTING: ${TESTING_MODE}
     ports:
       - "8000:8000"
     depends_on:
