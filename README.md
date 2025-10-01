@@ -14,6 +14,8 @@ docker-compose up --build
 ```
 
 ## Доступ к приложению
+### После запуска в базе данных будет автоматически создан 
+### кошелек с UUID 3fa85f64-5717-4562-b3fc-2c963f66afa6
 
 - API: http://localhost:8000
 - Документация API: http://localhost:8000/api/v1/docs
